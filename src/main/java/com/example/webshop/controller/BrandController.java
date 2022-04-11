@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/brand")
@@ -38,7 +39,15 @@ public class BrandController {
         return brandFacade.save(brandForm)
                 .map(brandDTO -> ResponseEntity.status(HttpStatus.CREATED).body(brandDTO))
                 .get();
+    }
 
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity deleteBrand(@PathVariable Long id){
+        Optional<BrandDTO> optionalBrandDTO = brandFacade.deleteById(id);
+
+        if (optionalBrandDTO.isPresent()) return ResponseEntity.ok().build();
+
+        return ResponseEntity.noContent().build();
     }
 
 }

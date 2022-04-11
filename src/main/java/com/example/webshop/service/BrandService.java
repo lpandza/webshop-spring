@@ -11,4 +11,6 @@ public interface BrandService {
     Optional<Brand> getById(Long id);
 
     Optional<Brand> save(Brand brand);
+
+    void deleteById(Long id);
 }

@@ -31,4 +31,9 @@ public class BrandServiceImpl implements BrandService {
     public Optional<Brand> save(Brand brand) {
         return Optional.of(brandRepository.save(brand));
     }
+
+    @Override
+    public void deleteById(Long id) {
+        brandRepository.deleteById(id);
+    }
 }

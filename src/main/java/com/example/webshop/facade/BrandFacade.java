@@ -14,4 +14,6 @@ public interface BrandFacade {
     Optional<BrandDTO> getById(Long id);
 
     Optional<BrandDTO> save(BrandForm brandForm);
+
+    Optional<BrandDTO> deleteById(Long id);
 }

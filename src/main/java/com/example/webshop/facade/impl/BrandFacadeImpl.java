@@ -37,6 +37,14 @@ public class BrandFacadeImpl implements BrandFacade {
        return brandService.save(toBrand(brandForm)).map(this::brandDtoMapper);
     }
 
+    @Override
+    public Optional<BrandDTO> deleteById(Long id) {
+        Optional<Brand> brandOptional = brandService.getById(id);
+        brandOptional.ifPresent(b -> brandService.deleteById(b.getId()));
+
+        return brandOptional.map(this::brandDtoMapper);
+    }
+
     private BrandDTO brandDtoMapper(Brand brand) {
         return new BrandDTO(brand.getName());
     }
