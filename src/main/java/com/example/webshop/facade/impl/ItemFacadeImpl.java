@@ -1,6 +1,5 @@
 package com.example.webshop.facade.impl;
 
-import com.example.webshop.dto.BrandDTO;
 import com.example.webshop.dto.ItemDto;
 import com.example.webshop.entity.Brand;
 import com.example.webshop.entity.Item;
@@ -10,7 +9,6 @@ import com.example.webshop.service.BrandService;
 import com.example.webshop.service.ItemService;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +54,7 @@ public class ItemFacadeImpl implements ItemFacade {
     }
 
     private ItemDto toItemDto(Item item){
-        return new ItemDto(item.getName(), item.getDescription(), item.getPrice(), item.getQuantity(), item.getBrand());
+        return new ItemDto(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getQuantity(), item.getBrand());
     }
 
     private Item toItem(ItemForm itemForm, Brand brand){

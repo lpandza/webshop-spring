@@ -3,9 +3,11 @@ package com.example.webshop.controller;
 import com.example.webshop.dto.ItemDto;
 import com.example.webshop.facade.ItemFacade;
 import com.example.webshop.form.ItemForm;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,9 +34,9 @@ public class ItemController {
     }
 
     @PostMapping()
-    public ResponseEntity<ItemDto> save(@RequestBody ItemForm itemForm){
+    public ResponseEntity<ItemDto> save(@Valid @RequestBody ItemForm itemForm){
         return itemFacade.save(itemForm)
-                .map(ResponseEntity::ok)
+                .map((itemDto)-> ResponseEntity.status(HttpStatus.CREATED).body(itemDto))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 

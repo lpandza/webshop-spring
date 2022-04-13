@@ -1,6 +1,6 @@
 package com.example.webshop.controller;
 
-import com.example.webshop.dto.BrandDTO;
+import com.example.webshop.dto.BrandDto;
 import com.example.webshop.facade.BrandFacade;
 import com.example.webshop.form.BrandForm;
 import org.springframework.http.HttpStatus;
@@ -22,28 +22,27 @@ public class BrandController {
     }
 
     @GetMapping
-    public List<BrandDTO> getAll(){
+    public List<BrandDto> getAll(){
         return brandFacade.getAll();
     }
 
     @GetMapping(params = "id")
-    public ResponseEntity<BrandDTO> getBrandById(@RequestParam Long id){
+    public ResponseEntity<BrandDto> getBrandById(@RequestParam Long id){
         return brandFacade.getById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
-
     }
 
     @PostMapping
-    public ResponseEntity<BrandDTO> saveBrand(@Valid @RequestBody final BrandForm brandForm){
+    public ResponseEntity<BrandDto> saveBrand(@Valid @RequestBody final BrandForm brandForm){
         return brandFacade.save(brandForm)
-                .map(brandDTO -> ResponseEntity.status(HttpStatus.CREATED).body(brandDTO))
-                .get();
+                .map((brandDto)-> ResponseEntity.status(HttpStatus.CREATED).body(brandDto))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity deleteBrand(@PathVariable Long id){
-        Optional<BrandDTO> optionalBrandDTO = brandFacade.deleteById(id);
+        Optional<BrandDto> optionalBrandDTO = brandFacade.deleteById(id);
 
         if (optionalBrandDTO.isPresent()) return ResponseEntity.ok().build();
 

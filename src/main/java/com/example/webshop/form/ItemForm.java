@@ -1,13 +1,17 @@
 package com.example.webshop.form;
 
 import com.example.webshop.entity.Brand;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemForm {
     @NotBlank(message = "Name must not be empty")
     private String name;

@@ -1,7 +1,6 @@
 package com.example.webshop.facade;
 
-import com.example.webshop.dto.BrandDTO;
-import com.example.webshop.entity.Brand;
+import com.example.webshop.dto.BrandDto;
 import com.example.webshop.form.BrandForm;
 
 import java.util.List;
@@ -9,11 +8,11 @@ import java.util.Optional;
 
 public interface BrandFacade {
 
-    List<BrandDTO> getAll();
+    List<BrandDto> getAll();
 
-    Optional<BrandDTO> getById(Long id);
+    Optional<BrandDto> getById(Long id);
 
-    Optional<BrandDTO> save(BrandForm brandForm);
+    Optional<BrandDto> save(BrandForm brandForm);
 
-    Optional<BrandDTO> deleteById(Long id);
+    Optional<BrandDto> deleteById(Long id);
 }
