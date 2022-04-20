@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/brand")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BrandController {
 
     private final BrandFacade brandFacade;

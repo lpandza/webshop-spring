@@ -3,6 +3,9 @@ package com.example.webshop.service.impl;
 import com.example.webshop.entity.Item;
 import com.example.webshop.repository.ItemRepository;
 import com.example.webshop.service.ItemService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +21,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getAll() {
-        return itemRepository.findAll();
+    public Page<Item> getAll(Pageable pageable, Specification<Item> itemSpecification) {
+        return itemRepository.findAll(itemSpecification, pageable);
     }
 
     @Override

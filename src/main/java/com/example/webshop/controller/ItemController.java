@@ -1,7 +1,10 @@
 package com.example.webshop.controller;
 
 import com.example.webshop.dto.ItemDto;
+import com.example.webshop.dto.PageDto;
+import com.example.webshop.specification.PageSettings;
 import com.example.webshop.facade.ItemFacade;
+import com.example.webshop.form.ItemFilterForm;
 import com.example.webshop.form.ItemForm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/item")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ItemController {
 
     private final ItemFacade itemFacade;
@@ -22,8 +26,9 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAll(){
-        return itemFacade.getAll();
+    public PageDto<ItemDto> getAll(PageSettings pageSettings, ItemFilterForm itemFilterForm){
+        System.out.println(itemFilterForm);
+        return itemFacade.getAll(pageSettings, itemFilterForm);
     }
 
     @GetMapping(path = "/{id}")
