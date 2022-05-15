@@ -28,5 +28,6 @@ public class ItemForm {
     private Integer quantity;
 
     @NotNull(message = "Brand must not be empty")
-    private Long brandId;
+    private Brand brand;
+
 }

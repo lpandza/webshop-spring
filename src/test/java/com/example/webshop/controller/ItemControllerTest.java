@@ -2,9 +2,7 @@ package com.example.webshop.controller;
 
 import com.example.webshop.dto.ItemDto;
 import com.example.webshop.entity.Brand;
-import com.example.webshop.specification.PageSettings;
 import com.example.webshop.facade.ItemFacade;
-import com.example.webshop.form.ItemFilterForm;
 import com.example.webshop.form.ItemForm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -85,7 +82,7 @@ public class ItemControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
 
         Brand brand = new Brand("newBrand");
-        ItemForm itemForm = new ItemForm("newItem", "Description...", 200D, 5,1L);
+        ItemForm itemForm = new ItemForm("newItem", "Description...", 200D, 5,brand);
         ItemDto itemDto = new ItemDto(1L, "newItem", "Description...", 200D, 5, brand);
 
         when(itemFacade.save(any(ItemForm.class))).thenReturn(Optional.of(itemDto));
@@ -107,7 +104,7 @@ public class ItemControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
 
         Brand brand = new Brand("newBrand");
-        ItemForm itemForm = new ItemForm("", "Description...", 200D, 5,1L);
+        ItemForm itemForm = new ItemForm("", "Description...", 200D, 5,brand);
         ItemDto itemDto = new ItemDto(1L, "", "Description...", 200D, 5, brand);
 
         when(itemFacade.save(any(ItemForm.class))).thenReturn(Optional.of(itemDto));

@@ -2,7 +2,7 @@ package com.example.webshop.controller;
 
 import com.example.webshop.dto.ItemDto;
 import com.example.webshop.dto.PageDto;
-import com.example.webshop.specification.PageSettings;
+import com.example.webshop.specification.ItemPageSettings;
 import com.example.webshop.facade.ItemFacade;
 import com.example.webshop.form.ItemFilterForm;
 import com.example.webshop.form.ItemForm;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,9 +25,9 @@ public class ItemController {
     }
 
     @GetMapping
-    public PageDto<ItemDto> getAll(PageSettings pageSettings, ItemFilterForm itemFilterForm){
+    public PageDto<ItemDto> getAll(ItemPageSettings itemPageSettings, ItemFilterForm itemFilterForm){
         System.out.println(itemFilterForm);
-        return itemFacade.getAll(pageSettings, itemFilterForm);
+        return itemFacade.getAll(itemPageSettings, itemFilterForm);
     }
 
     @GetMapping(path = "/{id}")
@@ -52,6 +51,15 @@ public class ItemController {
         if (itemDto.isPresent()) return ResponseEntity.ok().build();
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<ItemDto> updateItem(@PathVariable Long id,
+                                              @Valid @RequestBody ItemForm itemForm){
+
+        return itemFacade.update(id, itemForm)
+                .map(itemDto -> ResponseEntity.status(HttpStatus.OK).body(itemDto))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
 }

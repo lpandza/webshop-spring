@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.data.domain.Sort;
 
 @Data
-public class PageSettings {
+public class ItemPageSettings {
 
     private Integer page = 1;
     private Integer itemsPerPage = 10;

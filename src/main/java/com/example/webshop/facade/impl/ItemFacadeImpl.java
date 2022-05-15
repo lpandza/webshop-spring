@@ -5,7 +5,7 @@ import com.example.webshop.dto.PageDto;
 import com.example.webshop.entity.Brand;
 import com.example.webshop.entity.Item;
 import com.example.webshop.mapper.PageDtoMapper;
-import com.example.webshop.specification.PageSettings;
+import com.example.webshop.specification.ItemPageSettings;
 import com.example.webshop.facade.ItemFacade;
 import com.example.webshop.form.ItemFilterForm;
 import com.example.webshop.form.ItemForm;
@@ -35,9 +35,9 @@ public class ItemFacadeImpl implements ItemFacade {
     }
 
     @Override
-    public PageDto<ItemDto> getAll(PageSettings pageSettings, ItemFilterForm itemFilterForm) {
-        Sort sort = pageSettings.buildSort();
-        Pageable pageable = PageRequest.of(pageSettings.getPage() - PAGE_OFFSET, pageSettings.getItemsPerPage(), sort);
+    public PageDto<ItemDto> getAll(ItemPageSettings itemPageSettings, ItemFilterForm itemFilterForm) {
+        Sort sort = itemPageSettings.buildSort();
+        Pageable pageable = PageRequest.of(itemPageSettings.getPage() - PAGE_OFFSET, itemPageSettings.getItemsPerPage(), sort);
 
         Specification<Item> itemSpecification = getItemSpecification(itemFilterForm);
 
@@ -51,7 +51,7 @@ public class ItemFacadeImpl implements ItemFacade {
 
     @Override
     public Optional<ItemDto> save(ItemForm itemForm) {
-        Optional<Brand> brandOptional = brandService.getById(itemForm.getBrandId());
+        Optional<Brand> brandOptional = brandService.getById(itemForm.getBrand().getId());
 
         if (brandOptional.isEmpty()) return Optional.empty();
 
@@ -64,6 +64,27 @@ public class ItemFacadeImpl implements ItemFacade {
         itemOptional.ifPresent(i -> itemService.deleteById(i.getId()));
 
         return itemOptional.map(this::toItemDto);
+    }
+
+    @Override
+    public Optional<ItemDto> update(Long id, ItemForm itemForm) {
+        Optional<Brand> brandOptional = brandService.getById(itemForm.getBrand().getId());
+        Optional<Item> itemOptional = itemService.getById(id);
+
+        if (brandOptional.isEmpty() || itemOptional.isEmpty()) return Optional.empty();
+
+//        return itemService.update(id, toItem(itemForm, brandOptional.get())).map(this::toItemDto);
+        Item newItem = toItem(itemForm, brandOptional.get());
+        return itemService.getById(id)
+                .map(item -> {
+                    item.setName(newItem.getName());
+                    item.setDescription(newItem.getDescription());
+                    item.setPrice(newItem.getPrice());
+                    item.setQuantity(newItem.getQuantity());
+                    item.setBrand(newItem.getBrand());
+                    return itemService.save(item).map(this::toItemDto);
+                })
+                .orElseGet(Optional::empty);
     }
 
     private Specification<Item> getItemSpecification(ItemFilterForm itemFilterForm) {
