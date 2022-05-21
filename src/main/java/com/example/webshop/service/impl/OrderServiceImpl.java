@@ -1,10 +1,8 @@
 package com.example.webshop.service.impl;
 
 import com.example.webshop.entity.Order;
-import com.example.webshop.form.OrderForm;
 import com.example.webshop.repository.OrderRepository;
 import com.example.webshop.service.OrderService;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

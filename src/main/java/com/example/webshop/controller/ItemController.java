@@ -26,7 +26,6 @@ public class ItemController {
 
     @GetMapping
     public PageDto<ItemDto> getAll(ItemPageSettings itemPageSettings, ItemFilterForm itemFilterForm){
-        System.out.println(itemFilterForm);
         return itemFacade.getAll(itemPageSettings, itemFilterForm);
     }
 

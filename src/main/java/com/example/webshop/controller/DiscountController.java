@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("api/discount")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,7 +36,7 @@ public class DiscountController {
     }
 
     @PostMapping
-    public ResponseEntity<DiscountDto> saveDiscount(@RequestBody DiscountForm discountForm){
+    public ResponseEntity<DiscountDto> saveDiscount(@RequestBody @Valid DiscountForm discountForm){
         return discountFacade.save(discountForm)
                 .map(discountDto -> ResponseEntity.status(HttpStatus.CREATED).body(discountDto))
                 .orElseGet(() -> ResponseEntity.notFound().build());
