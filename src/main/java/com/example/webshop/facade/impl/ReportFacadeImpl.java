@@ -19,8 +19,8 @@ public class ReportFacadeImpl implements ReportFacade {
     }
 
     @Override
-    public Optional<ItemDto> getBestSellingItemLastWeek() {
-        return reportService.getBestSellingItemLastWeek().map(this::toItemDto);
+    public Optional<ItemDto> getBestSellingItemCurrentWeek() {
+        return reportService.getBestSellingItemCurrentWeek().map(this::toItemDto);
     }
 
     @Override

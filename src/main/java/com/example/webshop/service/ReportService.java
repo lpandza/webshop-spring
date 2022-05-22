@@ -6,7 +6,7 @@ import com.example.webshop.entity.Item;
 import java.util.Optional;
 
 public interface ReportService {
-    Optional<Item> getBestSellingItemLastWeek();
+    Optional<Item> getBestSellingItemCurrentWeek();
 
     Optional<ProfitByQuarterDto> getQuarterlyProfitByYear(Integer year);
 }

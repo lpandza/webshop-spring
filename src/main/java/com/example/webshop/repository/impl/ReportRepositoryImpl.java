@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,13 +21,13 @@ public class ReportRepositoryImpl implements ReportRepository {
     }
 
     @Override
-    public Optional<Item> getBestSellingItemLastWeek() {
+    public Optional<Item> getBestSellingItemCurrentWeek() {
         Query query = entityManager.createNativeQuery(
                 "SELECT i.*\n" +
                         "FROM orders o\n" +
                         "JOIN order_has_item ohi ON o.id = ohi.order_id\n" +
                         "JOIN item i ON ohi.item_id = i.id\n" +
-                        "WHERE yearweek(o.created_at) = yearweek(now() - INTERVAL 1 WEEK)\n" +
+                        "WHERE yearweek(o.created_at) = yearweek(now())\n" +
                         "GROUP BY 1\n" +
                         "ORDER BY count(*) DESC\n" +
                         "LIMIT 1;", Item.class

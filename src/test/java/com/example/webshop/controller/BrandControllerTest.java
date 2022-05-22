@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -69,6 +70,7 @@ public class BrandControllerTest {
         when(brandFacade.save(any(BrandForm.class))).thenReturn(Optional.of(brandDTO));
 
         mockMvc.perform(post("/api/brand")
+                        .with(httpBasic("admin", "pass"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(brandForm)))
                 .andExpect(jsonPath("$.id").value(1))
@@ -83,6 +85,7 @@ public class BrandControllerTest {
         BrandForm brandForm = new BrandForm("");
 
         mockMvc.perform(post("/api/brand")
+                        .with(httpBasic("admin", "pass"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(brandForm)))
                 .andExpect(status().isBadRequest());
@@ -97,6 +100,7 @@ public class BrandControllerTest {
         when(brandFacade.deleteById(1L)).thenReturn(Optional.of(brandDTO));
 
         mockMvc.perform(delete("/api/brand/1")
+                        .with(httpBasic("admin", "pass"))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
@@ -111,6 +115,7 @@ public class BrandControllerTest {
         when(brandFacade.deleteById(1L)).thenReturn(Optional.of(brandDTO));
 
         mockMvc.perform(delete("/api/brand/2")
+                        .with(httpBasic("admin", "pass"))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andExpect(jsonPath("$").doesNotExist());

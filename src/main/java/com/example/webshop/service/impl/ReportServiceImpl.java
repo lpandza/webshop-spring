@@ -18,8 +18,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Optional<Item> getBestSellingItemLastWeek() {
-        return reportRepository.getBestSellingItemLastWeek();
+    public Optional<Item> getBestSellingItemCurrentWeek() {
+        return reportRepository.getBestSellingItemCurrentWeek();
     }
 
     @Override

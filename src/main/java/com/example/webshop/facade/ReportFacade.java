@@ -6,7 +6,7 @@ import com.example.webshop.dto.ProfitByQuarterDto;
 import java.util.Optional;
 
 public interface ReportFacade {
-    Optional<ItemDto> getBestSellingItemLastWeek();
+    Optional<ItemDto> getBestSellingItemCurrentWeek();
 
     Optional<ProfitByQuarterDto> getQuarterlyProfitByYear(Integer year);
 }

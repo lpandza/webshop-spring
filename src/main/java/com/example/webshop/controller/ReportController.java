@@ -23,7 +23,7 @@ public class ReportController {
 
     @GetMapping("/bestSelling")
     public ResponseEntity<ItemDto> getBestSellingItem(){
-        return reportFacade.getBestSellingItemLastWeek()
+        return reportFacade.getBestSellingItemCurrentWeek()
                 .map((itemDto) -> ResponseEntity.status(HttpStatus.OK).body(itemDto))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
